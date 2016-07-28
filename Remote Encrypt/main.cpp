@@ -1,5 +1,9 @@
+#include <Windows.h>
+#include "FileHandler.h"
+
 int main() 
 {
-	Change
+	string Path = "C:\\test\\lol";
+	FileHandler obj;
 	return 0;
 }
