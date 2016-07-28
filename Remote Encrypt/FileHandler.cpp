@@ -4,9 +4,7 @@
 void FileHandler::findFiles(wstring Directory, vector<wstring>& fileFilter, bool subDirectorys)
 {
 	WIN32_FIND_DATA findData;
-
 	AddBackSlashToPath(Directory);
-
 	wstring originalPath = Directory;
 
 	if (!DirectoryExists(Directory))
