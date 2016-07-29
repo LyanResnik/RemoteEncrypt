@@ -36,6 +36,7 @@ bool CryptoAPI::AES128EncDec(wstring filePath, char *key, bool encrypt)
 		dwBufferLen = dwBlockLen;
 
 	pbBuffer = (BYTE *)malloc(dwBufferLen);
+	int k = 0;
 	bool fEOF = FALSE;
 
 	do
@@ -46,8 +47,12 @@ bool CryptoAPI::AES128EncDec(wstring filePath, char *key, bool encrypt)
 			fEOF = TRUE;
 
 		SetFilePointer(hFile, -dwCount, NULL, FILE_CURRENT);
-		//TODO: Find a way to read/write at same time o.o
-		CryptEncrypt(hKey, NULL, fEOF, 0, pbBuffer, &dwCount, dwBufferLen);
+
+		if (encrypt)
+			CryptEncrypt(hKey, NULL, fEOF, 0, pbBuffer, &dwCount, dwBufferLen);
+		else
+			CryptDecrypt(hKey, NULL, fEOF, 0, pbBuffer, &dwCount);
+
 		WriteFile(hFile, pbBuffer, dwCount, &dwCount, NULL);
 
 	} while (!fEOF);
@@ -71,6 +76,7 @@ bool CryptoAPI::AES128EncDec(wstring filePath, char *key, bool encrypt)
 CryptoAPI::CryptoAPI()
 {
 	AES128EncDec(L"C:\\tmp\\putty.exe", "passswordd", true);
+	Sleep(2000);
 	AES128EncDec(L"C:\\tmp\\putty.exe", "passswordd", false);
 }
 
